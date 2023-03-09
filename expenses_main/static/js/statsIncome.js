@@ -30,7 +30,7 @@ const renderChart = (data, labels) => {
         options: {
             title: {
                 display: true,
-                text: 'Incomes per category'
+                text: 'Incomes by category'
             }
         }
     });
