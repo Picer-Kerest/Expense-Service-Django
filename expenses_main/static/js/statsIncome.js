@@ -6,7 +6,7 @@ const renderChart = (data, labels) => {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Last 6 months expenses',
+                label: 'Last 6 months incomes',
                 data: data,
                   backgroundColor: [
                     "rgba(255, 99, 132, 0.2)",
@@ -30,18 +30,19 @@ const renderChart = (data, labels) => {
         options: {
             title: {
                 display: true,
-                text: 'Expenses per category'
+                text: 'Incomes per category'
             }
         }
     });
 }
 
 const getChartData = () => {
-    fetch('/expense-category-summary/')
+    fetch('/income/income-category-summary/')
         .then(res => res.json())
         .then(results => {
-            const category_data = results.expense_category_data;
-            const [data, labels] = [Object.values(category_data), Object.keys(category_data)];
+            console.log(results);
+            const source_data = results.income_source_data;
+            const [data, labels] = [Object.values(source_data), Object.keys(source_data)];
             renderChart(data, labels);
         });
 }

@@ -1,12 +1,7 @@
 import json
 from django.test import TestCase, Client
 from django.urls import reverse
-from .models import Expense
 from django.contrib.auth.models import User
-from django.test import TestCase, Client
-from django.urls import reverse
-from django.contrib.auth.models import User
-from userpreferences.models import UserPreference
 from .models import Expense
 
 

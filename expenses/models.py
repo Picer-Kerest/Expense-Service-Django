@@ -34,7 +34,6 @@ class Expense(models.Model):
     date = models.DateField(default=now)
     description = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
     category = models.CharField(max_length=255)
 
     def __str__(self):

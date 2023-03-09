@@ -10,7 +10,6 @@ from .views import (
     ResetEmailValidationView,
     ResetPasswordView,
     CompletePasswordResetView,
-    # NewPasswordValidateView
 )
 from django.urls import path
 
@@ -24,6 +23,5 @@ urlpatterns = [
     path('validate-reset-email/', csrf_exempt(ResetEmailValidationView.as_view()), name='validate-reset-email'),
     path('reset-password/', ResetPasswordView.as_view(), name='reset-password'),
     path('set-new-password/<uidb64>/<token>/', CompletePasswordResetView.as_view(), name='set-new-password'),
-    # path('validate-new-password/', csrf_exempt(NewPasswordValidateView.as_view()), name='validate-new-password'),
 ]
 

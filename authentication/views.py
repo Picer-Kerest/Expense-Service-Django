@@ -1,10 +1,11 @@
+import json
+import threading
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-import json
 from django.contrib.auth.models import User
 from validate_email import validate_email
 from django.contrib import messages, auth
@@ -12,7 +13,6 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import token_generator
-import threading
 
 
 class EmailThread(threading.Thread):
@@ -57,11 +57,9 @@ class RegistrationView(View):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-
         context = {
             'fieldValues': request.POST
         }
-
         if not User.objects.filter(username=username).exists():
             if not User.objects.filter(email=email).exists():
                 if len(password) < 6:
@@ -142,11 +140,9 @@ class LoginView(View):
     def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
-
         context = {
             'fieldValues': request.POST
         }
-
         if username and password:
             user = auth.authenticate(username=username, password=password)
             if user:
@@ -211,25 +207,6 @@ class ResetPasswordView(View):
         EmailThread(email).start()
         messages.success(request, 'We have sent you an email to reset your password')
         return render(request, 'authentication/reset-password.html')
-
-
-# class NewPasswordValidateView(View):
-#     """
-#     For Postman:
-#     {
-#     "password": "1234",
-#     "password2": "1234"
-#     }
-#     """
-#     def post(self, request):
-#         data = json.loads(request.body)
-#         password1 = data['password']
-#         password2 = data['password2']
-#         if password1 != password2:
-#             return JsonResponse({'password_error': "Password didn't match"}, status=400)
-#         if len(password1) < 6:
-#             return JsonResponse({'password_error': "Password is too short"}, status=400)
-#         return JsonResponse({'password_valid': True})
 
 
 class CompletePasswordResetView(View):

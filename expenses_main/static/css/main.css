@@ -57,3 +57,19 @@ white-space: nowrap;
 .showPasswordToggle:hover {
     transform: scale(1.1);
 }
+
+a:hover {
+    color: #444;
+    text-decoration: none;
+}
+
+.help_info {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card-title {
+    text-align: center;
+}

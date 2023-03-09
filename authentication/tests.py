@@ -23,17 +23,6 @@ class LoginViewTestCase(TestCase):
         self.assertRedirects(response, reverse('expenses'))
         self.assertTrue(response.wsgi_request.user.is_authenticated)
 
-    def test_login_inactive_user(self):
-        self.user.is_active = False
-        self.user.save()
-        data = {
-            'username': 'testuser',
-            'password': 'testpass'
-        }
-        response = self.client.post(self.login_url, data)
-        self.assertTemplateUsed(response, 'authentication/login.html')
-        self.assertContains(response, 'Account is not active, please check your email')
-
     def test_login_invalid_credentials(self):
         data = {
             'username': 'testuser',

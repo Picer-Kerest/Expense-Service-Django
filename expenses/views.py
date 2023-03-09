@@ -5,12 +5,11 @@ import xlwt
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import Category, Expense
 from userpreferences.models import UserPreference
 from django.http import HttpResponse
-from reportlab.pdfgen import canvas
 
 
 def search_expenses(request):
@@ -47,7 +46,7 @@ def search_expenses(request):
 @login_required(login_url='/authentication/login')
 def index(request):
     expenses = Expense.objects.filter(owner=request.user)
-    paginator = Paginator(expenses, 10)
+    paginator = Paginator(expenses, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -74,7 +73,6 @@ def add_expense(request):
     elif request.method == 'POST':
         amount = request.POST['amount']
         description = request.POST['description']
-        # crude_category = request.POST['category']
         category = request.POST['category']
         expense_data = request.POST['expense_data']
         if not amount:
@@ -107,7 +105,6 @@ def edit_expense(request, expense_id):
     elif request.method == 'POST':
         amount = request.POST['amount']
         description = request.POST['description']
-        # crude_category = request.POST['category']
         category = request.POST['category']
         expense_data = request.POST['expense_data']
         if not amount:
@@ -127,6 +124,7 @@ def edit_expense(request, expense_id):
         return redirect('expenses')
 
 
+@login_required(login_url='/authentication/login')
 def expense_delete(request, expense_id):
     expense = Expense.objects.get(pk=expense_id)
     expense.delete()
@@ -134,6 +132,7 @@ def expense_delete(request, expense_id):
     return redirect('expenses')
 
 
+@login_required(login_url='/authentication/login')
 def expense_category_summary(request):
     today = datetime.date.today()
     six_months_ago = today - datetime.timedelta(days=182)
@@ -152,16 +151,17 @@ def expense_category_summary(request):
         return amount
 
     final_dct = {}
-    # for expense in expenses:
     for category in category_list:
         final_dct[category] = get_expense_category_amount(category)
     return JsonResponse({'expense_category_data': final_dct}, safe=False)
 
 
+@login_required(login_url='/authentication/login')
 def stats_view(request):
     return render(request, 'expenses/stats.html')
 
 
+@login_required(login_url='/authentication/login')
 def export_csv(request):
     """
     объект HttpResponse используется для отправки CSV-файла в качестве ответа на запрос.
@@ -179,6 +179,7 @@ def export_csv(request):
     return response
 
 
+@login_required(login_url='/authentication/login')
 def export_excel(request):
     """
     Создаём response в виде ms-excel
