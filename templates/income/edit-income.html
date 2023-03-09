@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'income' %}">Incomes</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Edit Income</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="col-md-2">
+      <a href="{% url 'income-delete' income.id %}" class="btn btn-danger btn-sm">Delete</a>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form action="{% url 'edit-income' income.id %}" method="POST">{% csrf_token %}
+        {% include 'partials/_messages.html' %}
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input id="amount" type="number" class="form-control" name="amount" value="{{ income.amount }}" >
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input id="description" type="text" class="form-control" name="description" value="{{ income.description }}" >
+        </div>
+        <div class="form-group">
+          <label for="source">Source</label>
+          <select name="source" class="form-control" id="source">
+            <option selected value="{{ income.source }}">{{ income.source }}</option>
+            {% for income in incomes %}
+              <option value="{{ source.name }}">{{ source.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+<!--          https://dev.to/codeclown/styling-a-native-date-input-into-a-custom-no-library-datepicker-2in      -->
+          <label for="dates">Date of Income</label>
+          <input id="dates" type="date" class="form-control" name="income_data"
+                 value="{{ income.date |date:'Y-m-d' }}" >
+        </div>
+        <input type="submit" value="Save" class="btn btn-primary" >
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

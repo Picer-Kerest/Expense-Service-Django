@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'income' %}">Income</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add Income</li>
+    </ol>
+  </nav>
+  <div class="card">
+    <div class="card-body">
+      <form action="{% url 'add-income' %}" method="POST">{% csrf_token %}
+        {% include 'partials/_messages.html' %}
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input id="amount" type="number" class="form-control" name="amount" value="{{ values.amount }}" >
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input id="description" type="text" class="form-control" name="description" value="{{ values.description }}" >
+        </div>
+        <div class="form-group">
+          <label for="source">Source</label>
+          <select name="source" class="form-control" id="source">
+            {% for source in sources %}
+              <option value="{{ source.name }}">{{ source.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+<!--          https://dev.to/codeclown/styling-a-native-date-input-into-a-custom-no-library-datepicker-2in      -->
+          <label for="dates">Date of Income</label>
+          <input id="dates" type="date" class="form-control" name="income_data" >
+        </div>
+        <input type="submit" value="Submit" class="btn btn-primary btn-primary-sm" >
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

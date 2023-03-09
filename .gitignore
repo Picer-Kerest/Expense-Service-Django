@@ -1,0 +1,22 @@
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+work.html
+work.txt
+.env
+text.txt
+*.sqlite3
+/db/*.sqlite3
+envir/
+HTML Helper.txt
+FK & OtO Helper.txt
+is_active Helper.txt
+Login & Authenticate Helper.txt
+Verification Helper.txt
+Test Helper.txt
+primary_key urls Helper.txt
+bad pagination.txt
+Active or not.txt
+admin Hepler.txt
